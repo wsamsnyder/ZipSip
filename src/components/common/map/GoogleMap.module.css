@@ -1,0 +1,11 @@
+.map {
+  height: 100px;
+  width: 100px;
+}
+
+.missingCoordText {
+  font-size: larger;
+  font-weight: bolder;
+  display: inline-block;
+  text-align: center;
+}

@@ -1,0 +1,18 @@
+.search {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem;
+  align-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  min-width: 100px;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 2rem;
+  padding: 1rem;
+  margin-bottom: 5rem;
+}
