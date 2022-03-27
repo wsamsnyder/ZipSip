@@ -10,23 +10,29 @@ import styles from "./Search.module.css";
 
 interface Params {
   handleSearch: (val: string) => void;
+  handleOpen: () => void;
 }
 
-const Search = ({ handleSearch }: Params) => {
+const removeText = (text: string) => text.replace(/\D+/g, "");
+
+const Search = ({ handleSearch, handleOpen: handleOpenProp }: Params) => {
   const [isOpen, setIsOpen] = useState(true);
   const [zipCode, setZipCode] = useState("");
-
-  const removeText = (text: string) => text.replace(/\D+/g, "");
 
   const handleOk = () => {
     handleSearch(zipCode);
     setIsOpen(false);
   };
 
+  const handleOpen = () => {
+    handleOpenProp();
+    setIsOpen(true);
+  };
+
   return (
     <div className={styles.search}>
       {isOpen ? (
-        <Form className={styles.form}>
+        <Form className={styles.form} onSubmit={handleOk}>
           <FormGroup label="Zip Code" isRequired fieldId="zipCode">
             <TextInput
               type="text"
@@ -47,7 +53,7 @@ const Search = ({ handleSearch }: Params) => {
           </ActionGroup>
         </Form>
       ) : (
-        <Button variant="primary" onClick={() => setIsOpen(true)}>
+        <Button variant="primary" onClick={() => handleOpen()}>
           Search
         </Button>
       )}

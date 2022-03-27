@@ -6,13 +6,14 @@ import { BreweryType } from "../../types/brewery";
 
 interface Params {
   breweries: BreweryType[];
+  haveSearched: boolean;
 }
 
 interface Expanded {
   [id: string]: boolean;
 }
 
-const Breweries = ({ breweries }: Params) => {
+const Breweries = ({ breweries, haveSearched }: Params) => {
   const [expandedMap, setExpandedMap] = useState<Expanded>({});
 
   const handleExpand = (id: string) => {
@@ -29,6 +30,9 @@ const Breweries = ({ breweries }: Params) => {
           setIsExpanded={() => handleExpand(brewery.id)}
         />
       ))}
+      {haveSearched && !breweries.length ? (
+        <span>No Breweries in the Search Area</span>
+      ) : null}
     </>
   );
 };
