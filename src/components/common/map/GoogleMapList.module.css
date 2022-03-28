@@ -1,6 +1,8 @@
 .map {
-  height: 100px;
-  width: 100px;
+  height: 100vh;
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .missingCoordText {

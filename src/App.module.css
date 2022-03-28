@@ -1,6 +1,22 @@
-.container {
+.home {
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.hasResults {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background-color: #fbb947;
+}
+
+.searchAndResults {
+  grid-column-end: 1;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  height: 100vh;
 }

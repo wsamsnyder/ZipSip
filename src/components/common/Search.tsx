@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Form,
   FormGroup,
@@ -6,23 +6,27 @@ import {
   ActionGroup,
   Button,
 } from "@patternfly/react-core";
+
+import { removeText } from "../utils";
+
 import styles from "./Search.module.css";
 
 interface Params {
-  handleSearch: (val: string) => void;
+  zipCode: string;
+  setZipCode: (val: string) => void;
+  handleSearch: () => void;
   handleOpen: () => void;
+  canCollapse?: boolean;
 }
 
-const removeText = (text: string) => text.replace(/\D+/g, "");
-
-const Search = ({ handleSearch, handleOpen: handleOpenProp }: Params) => {
+const Search = ({
+  zipCode,
+  setZipCode,
+  handleSearch,
+  handleOpen: handleOpenProp,
+  canCollapse = false,
+}: Params) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [zipCode, setZipCode] = useState("");
-
-  const handleOk = () => {
-    handleSearch(zipCode);
-    setIsOpen(false);
-  };
 
   const handleOpen = () => {
     handleOpenProp();
@@ -32,7 +36,13 @@ const Search = ({ handleSearch, handleOpen: handleOpenProp }: Params) => {
   return (
     <div className={styles.search}>
       {isOpen ? (
-        <Form className={styles.form} onSubmit={handleOk}>
+        <Form
+          className={styles.form}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+        >
           <FormGroup label="Zip Code" isRequired fieldId="zipCode">
             <TextInput
               type="text"
@@ -44,12 +54,14 @@ const Search = ({ handleSearch, handleOpen: handleOpenProp }: Params) => {
             />
           </FormGroup>
           <ActionGroup>
-            <Button variant="primary" onClick={handleOk}>
+            <Button variant="primary" onClick={handleSearch}>
               Search
             </Button>
-            <Button variant="secondary" onClick={() => setIsOpen(false)}>
-              Cancel
-            </Button>
+            {canCollapse && (
+              <Button variant="secondary" onClick={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+            )}
           </ActionGroup>
         </Form>
       ) : (

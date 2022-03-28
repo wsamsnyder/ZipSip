@@ -1,6 +1,26 @@
+.brewery {
+  display: grid;
+  grid-column-start: 0;
+  border: 1px solid black;
+  width: 90%;
+  border-radius: 1rem;
+  margin: 1rem;
+  background-color: #d4ccce;
+}
+
+.selected {
+  display: grid;
+  grid-column-start: 0;
+  border: 1px solid black;
+  width: 90%;
+  border-radius: 1rem;
+  margin: 1rem;
+  background-color: #fbf0b7;
+}
+
 .details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
 }
@@ -13,7 +33,7 @@
 }
 
 .info {
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
-  padding-right: 3rem;
 }

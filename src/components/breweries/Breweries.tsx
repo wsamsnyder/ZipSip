@@ -1,39 +1,67 @@
-import { useState } from "react";
+import React, { useEffect } from "react";
 
-import Brewery from "./Brewery";
+import BreweryInfo from "./BreweryInfo";
 
 import { BreweryType } from "../../types/brewery";
+
+import styles from "./Breweries.module.css";
+import { Button } from "@patternfly/react-core";
+
+interface Refs {
+  [id: string]: React.RefObject<HTMLDivElement>;
+}
 
 interface Params {
   breweries: BreweryType[];
   haveSearched: boolean;
+  onSelect: (id: string) => void;
+  selectedItem: string;
+  loadMore: () => void;
+  loadedAllBreweries: boolean;
 }
 
-interface Expanded {
-  [id: string]: boolean;
-}
+const Breweries = ({
+  breweries,
+  haveSearched,
+  onSelect,
+  selectedItem,
+  loadMore,
+  loadedAllBreweries,
+}: Params) => {
+  const refs: Refs = breweries.reduce(
+    (accum, brewery) => ({
+      ...accum,
+      [brewery.id]: React.createRef(),
+    }),
+    {}
+  );
 
-const Breweries = ({ breweries, haveSearched }: Params) => {
-  const [expandedMap, setExpandedMap] = useState<Expanded>({});
-
-  const handleExpand = (id: string) => {
-    setExpandedMap((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+  useEffect(() => {
+    refs?.[selectedItem]?.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [selectedItem, refs]);
 
   return (
-    <>
+    <div className={styles.breweries}>
       {breweries.map((brewery) => (
-        <Brewery
+        <BreweryInfo
           key={brewery.id}
+          ref={refs[brewery.id]}
+          isSelected={brewery.id === selectedItem}
           brewery={brewery}
-          isExpanded={expandedMap[brewery.id]}
-          setIsExpanded={() => handleExpand(brewery.id)}
+          onSelect={onSelect}
         />
       ))}
-      {haveSearched && !breweries.length ? (
+      {haveSearched && breweries.length && !loadedAllBreweries ? (
+        <Button onClick={loadMore}>Load More</Button>
+      ) : haveSearched && !breweries.length ? (
         <span>No Breweries in the Search Area</span>
+      ) : loadedAllBreweries ? (
+        <span>All Breweries Loaded</span>
       ) : null}
-    </>
+    </div>
   );
 };
 

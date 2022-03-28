@@ -1,9 +1,0 @@
-.brewery {
-  display: grid;
-  grid-column-start: 0;
-  margin-bottom: 2rem;
-  border: 1px solid black;
-  width: 50%;
-  border-radius: 1rem;
-  padding: 2rem;
-}
