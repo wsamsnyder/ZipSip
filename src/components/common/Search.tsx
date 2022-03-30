@@ -15,7 +15,6 @@ interface Params {
   zipCode: string;
   setZipCode: (val: string) => void;
   handleSearch: () => void;
-  handleOpen: () => void;
   canCollapse?: boolean;
 }
 
@@ -23,13 +22,11 @@ const Search = ({
   zipCode,
   setZipCode,
   handleSearch,
-  handleOpen: handleOpenProp,
   canCollapse = false,
 }: Params) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const handleOpen = () => {
-    handleOpenProp();
     setIsOpen(true);
   };
 
@@ -66,7 +63,7 @@ const Search = ({
         </Form>
       ) : (
         <Button variant="primary" onClick={() => handleOpen()}>
-          Search
+          Search Again
         </Button>
       )}
     </div>

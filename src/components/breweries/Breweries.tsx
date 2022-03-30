@@ -14,7 +14,7 @@ interface Refs {
 interface Params {
   breweries: BreweryType[];
   haveSearched: boolean;
-  onSelect: (id: string) => void;
+  onSelect?: (id: string) => void;
   selectedItem: string;
   loadMore: () => void;
   loadedAllBreweries: boolean;

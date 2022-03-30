@@ -9,10 +9,10 @@ import styles from "./GoogleMapList.module.css";
 
 interface Props {
   markers: MapMarkerType[];
-  onClick: (id: string) => void;
+  onClick?: (id: string) => void;
   defaultZoom?: number;
   selectedItem?: string;
-  onClose: (id: string) => void;
+  onClose?: (id: string) => void;
 }
 
 const GoogleMapList = ({
@@ -27,11 +27,11 @@ const GoogleMapList = ({
   const viableCoords = markers.find((marker) => isValidLocation(marker));
 
   const handleMarkerClick = (id: string) => {
-    onClick(id);
+    onClick?.(id);
   };
 
   const handlePopoverClose = (id: string) => {
-    onClose(id);
+    onClose?.(id);
   };
 
   useEffect(() => {

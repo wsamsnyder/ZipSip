@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Popover } from "@patternfly/react-core";
 import { MapPin } from "react-feather";
 
@@ -10,9 +8,9 @@ interface Props {
   text: string;
   lat: number;
   lng: number;
-  isVisible: boolean;
-  onClick: (id: string) => void;
-  onPopoverClose: (id: string) => void;
+  isVisible?: boolean;
+  onClick?: (id: string) => void;
+  onPopoverClose?: (id: string) => void;
 }
 
 const MapMarker = ({
@@ -25,11 +23,11 @@ const MapMarker = ({
   onPopoverClose,
 }: Props) => {
   const handlePopoverClose = () => {
-    onPopoverClose(id);
+    onPopoverClose?.(id);
   };
 
   const handleMarkerClick = () => {
-    onClick(id);
+    onClick?.(id);
   };
 
   return (

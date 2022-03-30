@@ -1,6 +1,6 @@
 import React from "react";
 
-import Address from "../common/Address";
+import Address from "../common/map/Address";
 import { BreweryType } from "../../types/brewery";
 import { isValidLocation } from "../utils";
 
@@ -8,7 +8,7 @@ import styles from "./BreweryInfo.module.css";
 
 interface Props {
   brewery: BreweryType;
-  onSelect: (id: string) => void;
+  onSelect?: (id: string) => void;
   isSelected: boolean;
 }
 
@@ -22,7 +22,7 @@ const BreweryInfo = React.forwardRef(
       <div
         ref={ref}
         className={isSelected ? styles.selected : styles.brewery}
-        onClick={() => onSelect(brewery.id)}
+        onClick={() => onSelect?.(brewery.id)}
       >
         <div className={styles.name}>
           <span>{brewery.name}</span>
@@ -39,7 +39,7 @@ const BreweryInfo = React.forwardRef(
             />
           </div>
           <div className={styles.info}>
-            <span>Type: {brewery.brewery_type}</span>
+            <span>Type: {brewery.brewery_type ?? "Not Available"}</span>
             {brewery.website_url ? (
               <a
                 href={`${brewery.website_url}`}
@@ -53,8 +53,8 @@ const BreweryInfo = React.forwardRef(
             )}
           </div>
           {!isValidLocation({
-            lat: parseFloat(brewery.latitude),
-            lng: parseFloat(brewery.longitude),
+            lat: parseFloat(`${brewery.latitude}`),
+            lng: parseFloat(`${brewery.longitude}`),
           }) && "Not Displayed in Map"}
         </div>
       </div>

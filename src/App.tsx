@@ -22,8 +22,8 @@ const App = () => {
     setMarkers(
       breweries.map((brewery) => ({
         id: brewery.id,
-        lat: parseFloat(brewery.latitude),
-        lng: parseFloat(brewery.longitude),
+        lat: parseFloat(`${brewery.latitude}`),
+        lng: parseFloat(`${brewery.longitude}`),
         text: brewery.name,
       }))
     );
@@ -39,18 +39,12 @@ const App = () => {
 
     const resp = (await breweryDb.getByZipCode(zipCode, page)) as BreweryType[];
 
-    if (resp.length < 10) {
-      setLoadedAllBreweries(true);
-    } else {
-      setLoadedAllBreweries(false);
-    }
+    resp.length < parseInt(process.env.REACT_APP_PER_PAGE ?? "10")
+      ? setLoadedAllBreweries(true)
+      : setLoadedAllBreweries(false);
 
     setBreweries(resp);
     setHaveSearched(true);
-  };
-
-  const handleSearchOpen = () => {
-    setHaveSearched(false);
   };
 
   const onClose = (id: string) => {
@@ -87,7 +81,6 @@ const App = () => {
             zipCode={zipCode}
             setZipCode={(val: string) => setZipCode(val)}
             handleSearch={handleSearch}
-            handleOpen={handleSearchOpen}
           />
           <Breweries
             breweries={breweries}
